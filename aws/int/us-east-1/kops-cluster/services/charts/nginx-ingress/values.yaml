@@ -1,0 +1,19 @@
+controller:
+  image:
+    tag: "0.10.2"
+
+  config:
+    use-proxy-protocol: "true"
+
+  replicaCount: 3
+
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+  
+  stats:
+    enabled: true
+
+rbac:
+  create: false
+
