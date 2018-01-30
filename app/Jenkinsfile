@@ -1,0 +1,132 @@
+#!/groovy
+
+def REGISTRY = ""
+def GITHUB_GROUP = ""
+def GITHUB_REPO = ""
+def APP = ""
+def DOCKER_HOST = "$REGISTRY/$GITHUB_GROUP/$APP"
+def CONTAINER_NAME = "$DOCKER_HOST:v$env.BUILD_NUMBER"
+def NAMESPACE = ""
+
+
+/* AWS Docker spot instance */
+pipeline {
+
+    agent none
+
+    stages {
+        /* Checkout code */
+        stage("Checkout and Build") {
+            agent {
+                label ""
+            }
+
+            steps {
+              retry(2) {
+                checkout scm
+              }
+
+              dir("app") {
+                writeFile file: "version.json", text: """
+                {
+                "buildNumber": "${env.BUILD_NUMBER}",
+                "buildTag": "${env.BUILD_TAG}",
+                "buildTime": "${env.BUILD_TIMESTAMP}"
+                }
+                """
+
+                sh "docker build -t $CONTAINER_NAME ."
+                sh "docker push $CONTAINER_NAME"
+              }
+            }
+            post {
+              success {
+                slackSend color: 'good', message: "${APP}, image: ${env.BUILD_NUMBER} has been built successfully"
+              }
+            }
+        }
+
+
+        /* send to kubectl deploy job with dev params */
+        stage('Deploy to INT') {
+          steps {
+            build job: 'example-project-deploy',
+            parameters: [
+                string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
+                string(name: 'NAMESPACE', value: "${NAMESPACE}"),
+                string(name: 'SERVICE', value: "${APP}")
+            ]
+          }
+          post {
+            success {
+              slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to INT"
+            }
+          }
+        }
+
+        /* push to STG env */
+        stage('Gate to STG') {
+            agent none
+
+            steps {
+                timeout(time: 7, unit: 'DAYS') {
+                    input (
+                        message: 'Do you want to push to STG?', submitterParameter: 'APPROVED_BY'
+                    )
+                }
+            }
+        }
+
+        /* send to kubectl deploy job with stg params */
+        stage('Deploy to stg') {
+            steps {
+                build job: 'example-project-deploy',
+                parameters: [
+                    string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
+                    string(name: 'NAMESPACE', value: "${NAMESPACE}"),
+                    string(name: 'SERVICE', value: "${APP}")
+                ]
+            }
+            post {
+              success {
+                slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to STG"
+              }
+            }
+        }
+
+        /* push to PRD env */
+        stage('Gate to PRD') {
+            agent none
+
+            steps {
+                timeout(time: 7, unit: 'DAYS') {
+                    input (
+                        message: 'Do you want to push to PRD?', submitterParameter: 'APPROVED_BY'
+                    )
+                }
+            }
+        }
+
+        /* send to kubectl deploy job with prd params */
+        stage('Deploy to prd') {
+            steps {
+                build job: 'example-project-deploy',
+                parameters: [
+                    string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
+                    string(name: 'NAMESPACE', value: "${NAMESPACE}"),
+                    string(name: 'SERVICE', value: "${APP}")
+                ]
+            }
+            post {
+              success {
+                slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to PRD"
+              }
+            }
+        }
+    }
+    post {
+      failure {
+        slackSend color: 'bad', message: "${APP} job failed - ${BUILD_URL}"
+      }
+    }
+}
