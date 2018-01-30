@@ -21,6 +21,6 @@ Primarily provided as [helm](https://github.com/kubernetes/helm) charts located 
 
 ### Infrastructure
 
-Infrastructure modules live in [aws/modules/](aws/modules/) and most module instanciations located in [aws/int/us-east-1/](aws/int/us-east-1/) and dns found in [aws/glabal/](aws/glabal/). 
+Infrastructure modules live in [aws/modules/](aws/modules/) and most module instanciations located in [aws/int/us-east-1/](aws/int/us-east-1/) and dns found in [aws/global/](aws/global/). 
 
 Primary platform and services located under [aws/int/us-east-1/kops-cluster](aws/int/us-east-1/kops-cluster).
