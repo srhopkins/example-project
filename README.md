@@ -1,6 +1,6 @@
 Project
 ---
-The following goals and MVP defined by client.
+The following Goal and MVP defined by client.
 
 ### Goal - Create application deployment process with-out downtime, using any tools comfortable to candidate.
 
