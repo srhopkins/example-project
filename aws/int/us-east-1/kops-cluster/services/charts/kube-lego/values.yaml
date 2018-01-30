@@ -20,8 +20,8 @@ config:
 ##
 image:
   repository: jetstack/kube-lego
-  tag: 0.1.5
-  pullPolicy: IfNotPresent
+  tag: "0.1.5"
+  pullPolicy: Always
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/

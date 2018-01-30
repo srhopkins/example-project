@@ -1,0 +1,21 @@
+Master: 
+  Name: hopkins.rocks
+  Image: jenkins/jenkins
+  ImageTag: "2.104"
+  ServiceType: ClusterIP
+  HostName: build.steven.hopkins.rocks
+  Ingress:
+    Annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      ingress.kubernetes.io/ssl-redirect: "true"
+    TLS:
+      - secretName: jenkins-build
+        hosts:
+          - build.steven.hopkins.rocks
+
+rbac:
+  install: false
+Persistence:
+  Size: 30Gi
+
