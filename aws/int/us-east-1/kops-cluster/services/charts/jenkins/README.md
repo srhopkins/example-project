@@ -1,3 +1,3 @@
 ```
-helm install --name jenkins stable/jenkins
+helm install --name jenkins stable/jenkins -f values.yaml
 ```
