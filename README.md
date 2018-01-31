@@ -19,7 +19,7 @@ A good solution should be automated and repro-ducible, organized as a repo on Gi
 | stg         | https://example-app.stg.steven.hopkins.rocks | Example Application - Stage Env |
 | prd         | https://example-app.steven.hopkins.rocks | Example Application - Production Env |
 
-![AWS Infrastructure](aws-diagram.png "AWS Infrastructure")
+![AWS Infrastructure](images/aws-diagram.png "AWS Infrastructure")
 
 ## Repository Layout
 ### Application
@@ -50,15 +50,15 @@ This job may be run manually so that you can provide image tags to manually laun
 
 The `vgs-guest` user account has build permissions in the jenkins account; you can watch the pipeline in action by initiating a `example-project` build.
 
-![STG Gate](build.png "STG Gate")
+![STG Gate](images/build.png "STG Gate")
 
-![STG Gate](build-with-params.png "STG Gate")
+![STG Gate](images/build-with-params.png "STG Gate")
 
 You can use the container weave scope view to watch new containers spin up/down along with ingress controller switch overs [weave-containers](https://scope.steven.hopkins.rocks/#!/state/{"topologyId":"containers"}).
 
 The dployment will progress through to `Gate to STG` as long as no errors occur. At which point you can take your time to review things (7 days) and once you are satisfied with the integration deployment you can hover over the blue progress in the `Gate to STG` box resulting in a popup allowing you to `Proceed` or `Abort` the stage deployment. Another gate will be present prior to the production deployment.
 
-![STG Gate](stg-gate.png "STG Gate")
+![STG Gate](images/stg-gate.png "STG Gate")
 
 ## Enhancements
 
