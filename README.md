@@ -43,7 +43,7 @@ Primary kubernetes platform and services located under [aws/int/us-east-1/kops-c
 There are two jobs involved in this basic build pipeline.
 
 #### example-project
-This job initiates and saves the successful build of a docker container. The job can be reused in other dockerized projects that provide a `Dockerfile` with necessary steps to build and run and application or service. Once a successful build is completed it calls the secondary parameterized job to deploy through each environment. 
+This job initiates and saves the successful build of a docker container. The job can be reused in other dockerized projects that provide a `Dockerfile` with necessary steps to build and run an application or service. Once a successful build is completed it calls the secondary parameterized job to deploy through each environment. 
 
 #### example-project-deploy
 This job may be run manually so that you can provide image tags to manually launch should there be an exception process such as a hotfix not processed through the build job (highly discouraged) or a rollback discovered later than expected. It is primarily intended to be called by the build and deploy orchestration job `example-project`.
@@ -86,4 +86,4 @@ Additional visibility, monitoring and alerting are powerful tools for catching i
 As a primarily AWS infrastructure I would suggest investing in Oracle CASB, Evident.io or some other like service to establish audit policies and best practices for AWS setup and confirguraition.
 
 ### Documenation and Knowledge Base
-Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created and stored in a centrally located Knowledge Base as issues are arise and solutions are discovered. 
+Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created and stored in a centrally located Knowledge Base as issues arise and solutions are discovered. 
