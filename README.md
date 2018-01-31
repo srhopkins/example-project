@@ -72,7 +72,9 @@ Breaking out pipeline code into a shared jenkins library would further encourage
 Hashicorp Consul and Vault should be setup for configuration, secrets and service discovery, 
 
 ### Environment
-Visibility, monitoring and alerting are powerful tools for catching issues early and identifying tipping points. The environment would benefit from some or all of the following.
+Colocating application and base infrastructure code is not ideal. This monolithic example repository should be pared down and broken up into logical separation of concerns. 
+
+Additional visibility, monitoring and alerting are powerful tools for catching issues early and identifying tipping points. The environment would benefit from some or all of the following.
 
  * PagerDuty
  * Graylog or EFK (Elasticsearch, Fluentd, Kibana)
