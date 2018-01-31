@@ -1,6 +1,12 @@
 #!/groovy
 
 node('ec2') {
+    
+    def IMAGE = params.IMAGE
+    def NAMESPACE = params.NAMESPACE
+    def DEPLOYMENT = params.DEPLOYMENT
+    def SERVER = params.SERVER
+    
     withCredentials([string(credentialsId: "${NAMESPACE}-token", variable: 'TOKEN')]) {
 
         def kubectl = """docker run --rm lachlanevenson/k8s-kubectl:v1.9.2 \
