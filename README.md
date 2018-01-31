@@ -58,6 +58,7 @@ Primary kubernetes platform and services located under [aws/int/us-east-1/kops-c
 There are two jobs involved in this basic build pipeline.
 
 #### example-project
+![Job Flow](images/deploy-flow.png "Deploy Flow")
 This job initiates and saves the successful build of a docker container. The job can be reused in other dockerized projects that provide a `Dockerfile` with necessary steps to build and run an application or service. Once a successful build is completed it calls the secondary parameterized job to deploy through each environment. 
 
 #### example-project-deploy
