@@ -43,7 +43,7 @@ Application is located in [app](app/) directory along with Dockerfile, Kubernete
 
 ### Services
 
-Primarily provided as [helm](https://github.com/kubernetes/helm) charts located in [charts](aws/int/us-east-1/kops-cluster/services/charts/) directory.  
+Primarily provided as [Helm](https://github.com/kubernetes/helm) charts located in [charts](aws/int/us-east-1/kops-cluster/services/charts/) directory.  
 
 ### Infrastructure
 
@@ -84,7 +84,7 @@ The application needs unit tests and exposed health endpoints. These can be used
 This deployment process uses standard kubernetes rollout. A canary deployment is a method by which you keep both version running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
 
 ### Jenkins 
-Breaking out pipeline code into a shared jenkins library would further encourage collabortation and code reusability. Jenkins could also benefit from some additional notifications integrations like Slack, PagerDuty and email.
+Breaking out pipeline code into a [shared jenkins library](https://jenkins.io/doc/book/pipeline/shared-libraries/) would further encourage collabortation and code reusability. Jenkins could also benefit from some additional notifications integrations like Slack, PagerDuty and email. Adding [commit status](https://developer.github.com/v3/repos/statuses/) pushes to the github repo would allow for better visibility while providing a single pane of glass into the entire build process. The commit status can also be used as a requirment for merging into protected branches configured through the github repo settings.
 
 ### Configuration and Secrets
 Hashicorp Consul and Vault should be setup for configuration, secrets and service discovery, 
@@ -99,6 +99,7 @@ Additional visibility, monitoring and alerting are powerful tools for catching i
  * Influxdb
  * Prometheus
  * Grafana
+ * Sonarqube
 
 ### Hardening
 As a primarily AWS infrastructure I would suggest investing in Oracle CASB, Evident.io or some other like service to establish audit policies and best practices for AWS setup and confirguraition.
