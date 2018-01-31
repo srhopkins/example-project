@@ -72,7 +72,7 @@ The `vgs-guest` user account has build permissions in the jenkins account; you c
 
 You can use the container weave scope view to watch new containers spin up/down along with ingress controller switch overs [weave-containers](https://scope.steven.hopkins.rocks/#!/state/{"topologyId":"containers"}).
 
-The dployment will progress through to `Gate to STG` as long as no errors occur. At which point you can take your time to review things (7 days) and once you are satisfied with the integration deployment you can hover over the blue progress in the `Gate to STG` box resulting in a popup allowing you to `Proceed` or `Abort` the stage deployment. Another gate will be present prior to the production deployment.
+The deployment will progress through to `Gate to STG` as long as no errors occur. At which point you can take your time to review things (7 days) and once you are satisfied with the integration deployment you can hover over the blue progress in the `Gate to STG` box resulting in a popup allowing you to `Proceed` or `Abort` the stage deployment. Another gate will be present prior to the production deployment.
 
 ![STG Gate](images/stg-gate.png "STG Gate")
 
@@ -82,7 +82,7 @@ The dployment will progress through to `Gate to STG` as long as no errors occur.
 The application needs unit tests and exposed health endpoints. These can be used in the build and deployment phases to confirm proper functionality. The code should also be tied into some type of code coverage analysis like [Sonarqube](https://www.sonarqube.org) to catch oportunities to enhace unit tests. Definitions for functional tests should be established for routing rules, monitoring, alerting and deployment acceptence criteria.
 
 ### Canary Deployment
-The current deployment process uses standard kubernetes rollout. A good enhanement would be a canary deployment: by which you keep both version running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
+The current deployment process uses standard kubernetes rollout. A good enhanement would be a canary deployment by which you keep both versions running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
 
 ### Jenkins 
 Breaking out pipeline code into a [shared jenkins library](https://jenkins.io/doc/book/pipeline/shared-libraries/) would further encourage collabortation and code reusability. Jenkins could also benefit from some additional notification integrations like Slack, PagerDuty and email. Adding [commit status](https://developer.github.com/v3/repos/statuses/) pushes to the github repo would allow for better visibility while providing a single pane of glass into the entire build process. The commit status can also be used as a requirment for merging into protected branches configured through the github repo settings.
@@ -93,7 +93,7 @@ Hashicorp Consul and Vault should be setup for configuration, secrets and servic
 ### Environment
 Colocating application and base infrastructure code is not ideal. This monolithic example repository should be pared down and broken up into logical separation of concerns. 
 
-Additional visibility, monitoring and alerting are powerful tools for catching issues early and identifying tipping points. The environment would benefit from some or all of the following.
+Visibility, monitoring and alerting provide the means for catching issues early and identifying tipping points. The environment would benefit from some or all of the following.
 
  * PagerDuty
  * Graylog or EFK (Elasticsearch, Fluentd, Kibana)
@@ -106,4 +106,4 @@ Additional visibility, monitoring and alerting are powerful tools for catching i
 As a primarily AWS infrastructure I would suggest investing in Oracle CASB, Evident.io or some other like service to establish audit policies and best practices for AWS setup and confirguraition.
 
 ### Documenation and Knowledge Base
-Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created and stored in a centrally located Knowledge Base as issues arise and solutions are discovered. 
+Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created,and stored in a centrally located Knowledge Base, as issues arise and solutions are discovered. 
