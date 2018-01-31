@@ -1,25 +1,22 @@
 #!/groovy
 
-def REGISTRY = ""
-def GITHUB_GROUP = ""
-def GITHUB_REPO = ""
-def APP = ""
-def DOCKER_HOST = "$REGISTRY/$GITHUB_GROUP/$APP"
-def CONTAINER_NAME = "$DOCKER_HOST:v$env.BUILD_NUMBER"
-def NAMESPACE = ""
+
+def APP = params.APP
+def PROJECT = params.PROJECT
+
+def CONTAINER_NAME = "${PROJECT}/${APP}:v$env.BUILD_NUMBER"
 
 
 /* AWS Docker spot instance */
 pipeline {
 
-    agent none
+    agent {
+        label 'ec2'
+    }
 
     stages {
         /* Checkout code */
         stage("Checkout and Build") {
-            agent {
-                label ""
-            }
 
             steps {
               retry(2) {
@@ -35,15 +32,15 @@ pipeline {
                 }
                 """
 
-                sh "docker build -t $CONTAINER_NAME ."
-                sh "docker push $CONTAINER_NAME"
+                sh "docker build -t ${CONTAINER_NAME} ."
+                sh "docker push ${CONTAINER_NAME}"
               }
             }
-            post {
-              success {
-                slackSend color: 'good', message: "${APP}, image: ${env.BUILD_NUMBER} has been built successfully"
-              }
-            }
+            // post {
+            //   success {
+            //     slackSend color: 'good', message: "${APP}, image: ${env.BUILD_NUMBER} has been built successfully"
+            //   }
+            // }
         }
 
 
@@ -53,20 +50,19 @@ pipeline {
             build job: 'example-project-deploy',
             parameters: [
                 string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
-                string(name: 'NAMESPACE', value: "${NAMESPACE}"),
-                string(name: 'SERVICE', value: "${APP}")
+                string(name: 'NAMESPACE', value: "int"),
+                string(name: 'DEPLOYMENT', value: "${APP}")
             ]
           }
-          post {
-            success {
-              slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to INT"
-            }
-          }
+        //   post {
+        //     success {
+        //       slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to INT"
+        //     }
+        //   }
         }
 
         /* push to STG env */
         stage('Gate to STG') {
-            agent none
 
             steps {
                 timeout(time: 7, unit: 'DAYS') {
@@ -83,20 +79,19 @@ pipeline {
                 build job: 'example-project-deploy',
                 parameters: [
                     string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
-                    string(name: 'NAMESPACE', value: "${NAMESPACE}"),
-                    string(name: 'SERVICE', value: "${APP}")
+                    string(name: 'NAMESPACE', value: "stg"),
+                    string(name: 'DEPLOYMENT', value: "${APP}")
                 ]
             }
-            post {
-              success {
-                slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to STG"
-              }
-            }
+            // post {
+            //   success {
+            //     slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to STG"
+            //   }
+            // }
         }
 
         /* push to PRD env */
         stage('Gate to PRD') {
-            agent none
 
             steps {
                 timeout(time: 7, unit: 'DAYS') {
@@ -113,15 +108,15 @@ pipeline {
                 build job: 'example-project-deploy',
                 parameters: [
                     string(name: 'IMAGE', value: "${CONTAINER_NAME}"),
-                    string(name: 'NAMESPACE', value: "${NAMESPACE}"),
-                    string(name: 'SERVICE', value: "${APP}")
+                    string(name: 'NAMESPACE', value: "prd"),
+                    string(name: 'DEPLOYMENT', value: "${APP}")
                 ]
             }
-            post {
-              success {
-                slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to PRD"
-              }
-            }
+            // post {
+            //   success {
+            //     slackSend color: 'good', message: "${APP}, image : ${env.BUILD_NUMBER}_master deployed to PRD"
+            //   }
+            // }
         }
     }
     post {

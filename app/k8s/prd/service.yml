@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: example-app
+  name: example-app
+  namespace: prd
+spec:
+  type: ClusterIP
+  ports:
+  - name: "vader-ui"
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: example-app
