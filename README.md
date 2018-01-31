@@ -10,14 +10,14 @@ Using at least two running instances (VMs or containers) with sample HTML app bu
 A good solution should be automated and repro-ducible, organized as a repo on Github with all required files, scripts and docs.
 
 | Namespace        | URL        | Description |
-| ------------- |:-------------:| -----------:|
+| ------------- |-------------| -----------|
 | kube-system | https://build.steven.hopkins.rocks | Jenkins server |
 | weave       | https://scope.steven.hopkins.rocks | [Weave Scope](https://www.weave.works/oss/scope/) |
 | int         | https://example-app.int.steven.hopkins.rocks | Example Application - Integration Env |
 | stg         | https://example-app.stg.steven.hopkins.rocks | Example Application - Stage Env |
 | prd         | https://example-app.steven.hopkins.rocks | Example Application - Production Env |
 
-![AWS Infrastructure](aws-diagran.png "AWS Infrastructure")
+![AWS Infrastructure](aws-diagram.png "AWS Infrastructure")
 
 ## Repository Layout
 ### Application
