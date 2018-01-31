@@ -32,8 +32,11 @@ pipeline {
                 }
                 """
 
-                sh "docker build -t ${CONTAINER_NAME} ."
-                sh "docker push ${CONTAINER_NAME}"
+                withCredentials([string(credentialsId: 'docker-login-srhopkins', variable: 'DOCKER_LOGIN')]) {
+                    sh "${DOCKER_LOGIN}"
+                    sh "docker build -t ${CONTAINER_NAME} ."
+                    sh "docker push ${CONTAINER_NAME}"
+                }
               }
             }
             // post {
