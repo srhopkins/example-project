@@ -106,4 +106,4 @@ Visibility, monitoring and alerting provide the means for catching issues early 
 As a primarily AWS infrastructure I would suggest investing in Oracle CASB, Evident.io or some other like service to establish audit policies and best practices for AWS setup and confirguraition.
 
 ### Documenation and Knowledge Base
-Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created,and stored in a centrally located Knowledge Base, as issues arise and solutions are discovered. 
+Documentation is a living organic process and should continue throughout the life of all projects. Periodic reviews should be established to reduce drift in documentation from actual state and new KBA should be created, and stored in a centrally located Knowledge Base, as issues arise and solutions are discovered. 
