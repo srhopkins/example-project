@@ -9,6 +9,8 @@ Using at least two running instances (VMs or containers) with sample HTML app bu
 
 A good solution should be automated and repro-ducible, organized as a repo on Github with all required files, scripts and docs.
 
+## URLs
+
 | Namespace        | URL        | Description |
 | ------------- |-------------| -----------|
 | kube-system | https://build.steven.hopkins.rocks | Jenkins server |
@@ -22,7 +24,7 @@ A good solution should be automated and repro-ducible, organized as a repo on Gi
 ## Repository Layout
 ### Application
 
-Application is located in [app](app/) directory along with Dockerfile and Jenkinsfile.
+Application is located in [app](app/) directory along with Dockerfile, Kubernetes configs and Jenkinsfile.
 
 ### Services
 
