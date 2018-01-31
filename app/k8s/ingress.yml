@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: example-app
+  namespace: int
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+    - host: example-app.int.steven.hopkins.rocks
+      http:
+        paths:
+          - backend:
+              serviceName: example-app
+              servicePort: 5000
+  tls:
+    - hosts:
+        - "example-app.int.steven.hopkins.rocks"
+      secretName: example-app-int
