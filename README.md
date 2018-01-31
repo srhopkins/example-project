@@ -23,7 +23,7 @@ A good solution should be automated and repro-ducible, organized as a repo on Gi
 
 ## Technology Stack
 * AWS Infrastructure
-  * EC2 Instances
+  * EC2 Instances in ASG
   * S3 State (KOPS and Terrafrom)
 * Kubernetes Platform
   * [NGINX Ingress Controller](https://github.com/kubernetes/charts/tree/master/stable/nginx-ingress)
