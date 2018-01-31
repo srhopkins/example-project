@@ -77,6 +77,9 @@ The dployment will progress through to `Gate to STG` as long as no errors occur.
 
 ## Enhancements
 
+### Application
+The application needs unit tests and exposed health endpoints. These can be used in the build and deployment phases to confirm proper functionality. The code should also be tied into some type of code coverage analysis like [Sonarqube](https://www.sonarqube.org) to catch oportunities to enhace unit tests. Definitions for functional tests should be established for routing rules, monitoring, alerting and deployment acceptence criteria.
+
 ### Canary Deployment
 This deployment process uses standard kubernetes rollout. A canary deployment is a method by which you keep both version running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
 
