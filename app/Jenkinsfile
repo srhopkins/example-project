@@ -27,8 +27,7 @@ pipeline {
                 writeFile file: "version.json", text: """
                 {
                 "buildNumber": "${env.BUILD_NUMBER}",
-                "buildTag": "${env.BUILD_TAG}",
-                "buildTime": "${env.BUILD_TIMESTAMP}"
+                "buildTag": "${env.BUILD_TAG}"
                 }
                 """
 
