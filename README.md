@@ -66,7 +66,7 @@ The dployment will progress through to `Gate to STG` as long as no errors occur.
 This deployment process uses standard kubernetes rollout. A canary deployment is a method by which you keep both version running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
 
 ### Jenkins 
-Jenkins could benefit from some additional notifications integrations like Slack and PagerDuty
+Breaking out pipeline code into a shared jenkins library would further encourage collabortation and code reusability. Jenkins could also benefit from some additional notifications integrations like Slack, PagerDuty and email.
 
 ### Configuration and Secrets
 Hashicorp Consul and Vault should be setup for configuration, secrets and service discovery, 
