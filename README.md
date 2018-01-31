@@ -21,6 +21,21 @@ A good solution should be automated and repro-ducible, organized as a repo on Gi
 
 ![AWS Infrastructure](images/aws-diagram.png "AWS Infrastructure")
 
+## Technology Stack
+* AWS Infrastructure
+  * EC2 Instances
+  * S3 State (KOPS and Terrafrom)
+* Kubernetes Platform
+  * [NGINX Ingress Controller](https://github.com/kubernetes/charts/tree/master/stable/nginx-ingress)
+  * [Kube-Lego Cert Management](https://github.com/kubernetes/charts/tree/master/stable/kube-lego) 
+  * [Jenkins](https://github.com/kubernetes/charts/tree/master/stable/jenkins)
+  * [Weave Scope](https://www.weave.works/docs/scope/latest/installing/#k8s)
+  * Application Tier
+* Python
+  * [Flask](http://flask.pocoo.org)
+* [Terraform](https://www.terraform.io)
+* [Terragrunt](https://github.com/gruntwork-io/terragrunt)
+
 ## Repository Layout
 ### Application
 
