@@ -43,17 +43,42 @@ Primary kubernetes platform and services located under [aws/int/us-east-1/kops-c
 There are two jobs involved in this basic build pipeline.
 
 #### example-project
-This job initiates and saves the successful build of a docker container. This job can be reused in other dockerized projects that provide a Dockerfile with necessary steps to build and run and application or service. Once a successful build is completed it calls the secondary parameterized job to deploy through each environment. 
+This job initiates and saves the successful build of a docker container. This job can be reused in other dockerized projects that provide a `Dockerfile` with necessary steps to build and run and application or service. Once a successful build is completed it calls the secondary parameterized job to deploy through each environment. 
 
 #### example-project-deploy
-This job may be run manually so that you can provide image tags to manually launch should there be an exception process such as a hotfix not processed through the build job (highly discouraged). It is primarily intended to be called by the build and deploy orchestration job `example-project`.
+This job may be run manually so that you can provide image tags to manually launch should there be an exception process such as a hotfix not processed through the build job (highly discouraged) or a rollback discovered later than expected. It is primarily intended to be called by the build and deploy orchestration job `example-project`.
 
-The `vgs-guest` user account has build permissions in the jenkins account so you can watch the pipeline in action by initiating a build.
-
-You can use the following container scope weave view to watch new containers spin up/down along with ingress controller switch overs [weave-containers](https://scope.steven.hopkins.rocks/#!/state/{"topologyId":"containers"}).
+The `vgs-guest` user account has build permissions in the jenkins account; you can watch the pipeline in action by initiating a `example-project` build.
 
 ![STG Gate](build.png "STG Gate")
 
 ![STG Gate](build-with-params.png "STG Gate")
 
+You can use the container weave scope view to watch new containers spin up/down along with ingress controller switch overs [weave-containers](https://scope.steven.hopkins.rocks/#!/state/{"topologyId":"containers"}).
+
+The dployment will progress through to `Gate to STG` as long as no errors occur. At which point you can take your time to review things (7 days) and once you are satisfied with the integration deployment you can hover over the blue progress in the `Gate to STG` box resulting in a popup allowing you to `Proceed` or `Abort` the stage deployment. Another gate will be present prior to the production deployment.
+
 ![STG Gate](stg-gate.png "STG Gate")
+
+## Enhancements
+
+### Canary Deployment
+This deployment process uses standard kubernetes rollout. A canary deployment is a method by which you keep both version running with a limited audience routing to the new code until you give everything the all clear and rollout the code to the rest of the environment. It can help prevent a service interuption and hopefully the need for a `rollout undo`. [Spinnaker.io](https://www.spinnaker.io) from Netflix offers an interesting product that actually handles complete blue/green deployments with some nice built-in Jenkins features.
+
+### Jenkins 
+Jenkins could benefit from some additional notifications integrations like Slack and PagerDuty
+
+### Configuration and Secrets
+Hashicorp Consul and Vault should be setup for configuration, secrets and service discovery, 
+
+### Environment
+Visibility, monitoring and alerting are powerful tools for catching issues early and identifying tipping points. The environment would benefit from some or all of the following.
+
+ * PagerDuty
+ * Graylog or EFK (Elasticsearch, Fluentd, Kibana)
+ * Influxdb
+ * Prometheus
+ * Grafana
+
+### Hardening
+As a primarily AWS infrastructure I would suggest investing in Oracle CASB, Evident.io or some other like service to establish audit policies and best practices for AWS setup and confirguraition.
